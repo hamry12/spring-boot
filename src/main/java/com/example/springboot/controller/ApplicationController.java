@@ -14,6 +14,11 @@ import com.example.springboot.service.Coach;
  * 2. In order to stop that we can mark it using @Lazy annotation. 
  */
 
+ /**
+ *  In order to setup Lazy Initialization at Global Level
+ *  define it in application.properties file
+ */
+
 @RestController
 public class ApplicationController {
 
@@ -21,6 +26,7 @@ public class ApplicationController {
 
     @Autowired
     public ApplicationController(@Qualifier("tennisCoach") Coach myCoach){
+        System.out.println("Application Constructor\t"+getClass().getName());
         this.myCoach=myCoach;
     }
 
