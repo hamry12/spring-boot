@@ -9,30 +9,51 @@ import com.example.springboot.service.Coach;
 
 
 /**
- * Note:
- * 1. All the classes are loaded upfront for bean initialization
- * 2. In order to stop that we can mark it using @Lazy annotation. 
+ * Note: Bean Scope
+ * 1. By Default the scope of a bean is Singleton
+ * 2. There are following Scopes
+ *  -> Singleton : creates one instance throughout the journey
+ *  -> Prototype : create one instance at each request
+ *  -> request
+ *  -> session
+ *  -> global-session
  */
 
  /**
- *  In order to setup Lazy Initialization at Global Level
- *  define it in application.properties file
- */
+  * Scope:
+    1. Life cycle of a bean
+    2. How long does a bean live
+    3. how many instances are created
+  */
+
 
 @RestController
 public class ApplicationController {
 
     private Coach myCoach;
+    private Coach alternativeCoach;
+
+    // @Autowired
+    // public ApplicationController(@Qualifier("cricketCoach") Coach myCoach,
+    // @Qualifier("cricketCoach")Coach alternativeCoach){
+    //     System.out.println("Application Constructor:\t"+getClass().getName());
+    //     this.myCoach=myCoach;
+    //     this.alternativeCoach=alternativeCoach;
+    // }
 
     @Autowired
-    public ApplicationController(@Qualifier("tennisCoach") Coach myCoach){
-        System.out.println("Application Constructor\t"+getClass().getName());
+    public void setCoach(@Qualifier("footballCoach") Coach myCoach,
+     @Qualifier("footballCoach") Coach alternativeCoach){
         this.myCoach=myCoach;
+        this.alternativeCoach=alternativeCoach;
     }
 
     @GetMapping("/dailyRoutine")
     public String getDailyWorkout(){
+        System.out.println("Singleton\t "+(myCoach == alternativeCoach));
         return myCoach.getDailyWorkout();
     }
+
+
     
 }
