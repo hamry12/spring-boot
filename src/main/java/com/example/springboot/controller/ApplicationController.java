@@ -9,10 +9,9 @@ import com.example.springboot.service.Coach;
 
 
 /**
- * Note: 
- * 1. Alternative way to sort multiple implemnetation is to use @Primary
- * 2. You can mark only class as @Primary
- * 3. If defined both @Qualifier has highest priority than @Primary
+ * Note:
+ * 1. All the classes are loaded upfront for bean initialization
+ * 2. In order to stop that we can mark it using @Lazy annotation. 
  */
 
 @RestController
@@ -21,12 +20,7 @@ public class ApplicationController {
     private Coach myCoach;
 
     @Autowired
-    public void setCoach(@Qualifier("tennisCoach")Coach myCoach){
-        this.myCoach=myCoach;
-    }
-
-    @Autowired
-    public ApplicationController(Coach myCoach){
+    public ApplicationController(@Qualifier("tennisCoach") Coach myCoach){
         this.myCoach=myCoach;
     }
 
